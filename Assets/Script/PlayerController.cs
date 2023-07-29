@@ -24,6 +24,15 @@ public class PlayerController : MonoBehaviour
     private float groundedRaycastDistance = 0.02f;
 
     private int moveDirection = 1;
+    private List<FruitInventory> fruitInventoryList = new List<FruitInventory>();
+    [System.Serializable]
+    public class FruitInventory
+    {
+        public FruitData fruit;
+        public int quantity;
+    }
+
+    
 
     void Start()
     {
@@ -76,7 +85,35 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(_runAnimatorParameter, Mathf.Abs(rb.velocity.x) > 0 && isGrounded);
         animator.SetBool(_jumpAnimatorParameter, rb.velocity.y > 0 && !isGrounded);
         animator.SetBool(_fallAnimatorParameter, rb.velocity.y < 0 && !isGrounded);
+    }
 
+    private void CollectFruit(GameObject fruitCollided)
+    {
+        bool hasFruit = false;
+        foreach(FruitInventory inventory in fruitInventoryList)
+        {
+            if (inventory.fruit == fruitCollided.GetComponent<FruitScript>().fruitType)
+            {
+                inventory.quantity += 1;
+                hasFruit = true;
+            }
+        }
+        if (!hasFruit)
+        {
+            FruitInventory tempInfo = new FruitInventory();
+            tempInfo.fruit = fruitCollided.GetComponent<FruitScript>().fruitType;
+            tempInfo.quantity = 1;
+            fruitInventoryList.Add(tempInfo);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<FruitScript>() != null)
+        {
+            CollectFruit(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
     }
 
 }
