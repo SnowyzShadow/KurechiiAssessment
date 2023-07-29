@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private float groundedRaycastDistance = 0.02f;
 
+    private int moveDirection = 1;
 
     void Start()
     {
@@ -38,15 +39,21 @@ public class PlayerController : MonoBehaviour
 
         // Horizontal movement
         float horizontalInput = Input.GetAxis("Horizontal");
-        if(horizontalInput > 0 )
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            moveDirection = -1;
+            transform.localScale = new Vector3(moveDirection, 1, 1);
         }
-        else if (horizontalInput < 0)
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            moveDirection = 1;
+            transform.localScale = new Vector3(moveDirection, 1, 1);
         }
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        else
+        {
+            moveDirection = 0;
+        }
+        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
         Debug.DrawRay(boxCollider.bounds.center, -transform.up * (groundedRaycastDistance + boxCollider.size.y / 2), Color.red);
         // Jumping
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -54,7 +61,6 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         AnimationCheck();
-        Debug.Log(horizontalInput);
     }
 
     private bool IsGrounded()
