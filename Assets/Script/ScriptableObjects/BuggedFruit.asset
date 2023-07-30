@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fruitName: Bugged Fruit
   fruitImage: {fileID: -4801923697170587870, guid: be1a5bd13766ec048bab6f4c578baa0f, type: 3}
-  fruitDescription: Wait why is this here? Is this intended?
+  fruitDescription: Wait what is this?
