@@ -135,7 +135,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (child.GetComponent<TMP_Text>() != null)
                 {
-                    child.GetComponent<TMP_Text>().text = fruitData.name + " has dropped!";
+                    child.GetComponent<TMP_Text>().text = fruitData.name + " dropped!";
                 }
             }
             Destroy(tempInfo, 2f);
@@ -187,7 +187,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (child.GetComponent<TMP_Text>() != null)
                 {
-                    child.GetComponent<TMP_Text>().text = fruitData.name + " has consumed!";
+                    child.GetComponent<TMP_Text>().text = fruitData.name + " consumed!";
                 }
             }
             Destroy(tempInfo, 2f);
